@@ -1,0 +1,194 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to Exceel One Hotel{% endblock %}
+
+{% block content %}
+<style>
+    .custom-control {
+        position: absolute;
+        top: 50%;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        z-index: 10;
+        transform: translateY(-50%);
+    }
+    
+    .custom-control i {
+        font-size: 20px;
+    }
+    
+    .carousel-control-prev.custom-control {
+        left: 10px;
+    }
+    
+    .carousel-control-next.custom-control {
+        right: 10px;
+    }
+    
+    .custom-control:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+    }
+    
+    .carousel-item {
+        align-items: center; /* Center content vertically */
+        justify-content: center; /* Center content horizontally */
+        overflow: hidden; /* Hide overflow to ensure clean cut-off */
+    }
+
+    .carousel-item img {
+        width: 100vw; /* Full viewport width */
+        height: 500px; 
+        object-fit: cover; /* Cover the entire container while maintaining aspect ratio */
+    }
+
+    .carousel-caption {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%); /* Center the caption */
+        color: white;
+        text-align: center;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    /* Carousel Indicators */
+    .carousel-indicators li {
+        background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent black */
+        border-radius: 50%; /* Make them circular */
+        width: 12px; /* Size of the circles */
+        height: 12px; /* Size of the circles */
+        opacity: 0.8; /* Slight transparency */
+    }
+
+    .carousel-indicators .active {
+        background-color: rgba(255, 255, 255, 1); /* Darker color for active indicator */
+        opacity: 1; /* Fully opaque for the active indicator */
+    }
+
+    /* Adjust the position of indicators */
+    .carousel-indicators {
+        bottom: 10px; /* Adjust based on your preference */
+    }
+    .title-description{
+        font-size: 50px;
+    }
+    .description-description{
+        font-size: 30px;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column; /* Ensure the card content stacks vertically */
+        height: 400px; /* Fixed height for all cards */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden; /* Hide overflow to maintain uniform height */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for better appearance */
+    }
+
+    .card-img-top {
+        width: 100%; /* Full width */
+        height: 250px; /* Fixed height for images */
+        object-fit: cover; /* Cover the image area while maintaining aspect ratio */
+    }
+
+    .card-body {
+        flex: 1; /* Make card body flexible to fill available space */
+        display: flex;
+        flex-direction: column; /* Stack content vertically */
+        justify-content: center; /* Center content vertically */
+        padding: 15px;
+    }
+
+    .card-title {
+        font-size: 1.25rem; /* Font size for card title */
+        margin-bottom: 0.5rem;
+    }
+
+    .card-text {
+        font-size: 1rem; /* Font size for card text */
+        margin-bottom: 0;
+    }
+</style>
+
+
+<div class="container mt-4">
+
+    <!-- Carousel Section -->
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for image in carousel_images %}
+            <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+            {% for image in carousel_images %}
+            <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                <img class="d-block w-100" src="{{ image.image.url }}" alt="{{ image.title }}">
+                <div class="carousel-caption d-none d-md-block col-md-12">
+                    <h5 class="title-description">{{ image.title }}</h5>
+                    <p class="description-description">{{ image.description }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a class="carousel-control-prev custom-control" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <i class="fas fa-arrow-left"></i>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next custom-control" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <i class="fas fa-arrow-right"></i>
+            <span class="sr-only">Next</span>
+        </a>
+        
+    </div>
+
+    <!-- Other Sections -->
+<!-- Food Section -->
+<h2>Available Foods</h2>
+<div class="row">
+    {% for food in foods %}
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            {% if food.food_image %}
+            <img src="{{ food.food_image.url }}" class="card-img-top" alt="{{ food.food_name }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ food.food_name }}</h5>
+                <p class="card-text">Price: Tsh {{ food.food_price }} /=</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<!-- Drink Samples Section -->
+<h2>Drink Samples</h2>
+<div class="row">
+    {% for drink in drinks %}
+    <div class="col-md-3 mb-3">
+        <div class="card">
+            {% if drink.drink_image %}
+            <img src="{{ drink.drink_image.url }}" class="card-img-top" alt="{{ drink.drink_name }}">
+            {% endif %}
+            <div class="card-body">
+                <h5 class="card-title">{{ drink.drink_name }}</h5>
+                <p class="card-text">Size: {{ drink.drink_size }}</p>
+                <p class="card-text">Price: Tsh {{ drink.drink_price }} /=</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+ 
+</div>
+{% endblock %}

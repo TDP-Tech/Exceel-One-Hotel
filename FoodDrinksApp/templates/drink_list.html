@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}Drink List{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Drink List</h2>
+    <a href="{% url 'drink_create' %}" class="btn btn-primary">Add Drink</a>
+</div>
+<table class="table table-bordered">
+    <thead class="table-dark">
+        <tr>
+            <th>S/No</th>
+            <th>Drink Name</th>
+            <th>Drink Size</th>
+            <th>Drink Price</th>
+            <th>Drink Bottles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for drink in drinks %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ drink.drink_name }}</td>
+            <td>{{ drink.drink_size }}</td>
+            <td>{{ drink.drink_price }} /=Tsh @</td>
+            <td>{{ drink.drink_amount }} bottle</td>
+            <td>
+                <a href="{% url 'drink_update' drink.pk %}" title="Edit" style="color: #ffc107;"><i class="fas fa-edit"></i></a>
+                <a href="{% url 'drink_delete' drink.pk %}" title="Delete" style="color: #dc3545;"><i class="fas fa-trash-alt"></i></a>                
+            </td> 
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

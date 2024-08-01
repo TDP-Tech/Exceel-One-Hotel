@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Drink{% endblock %}
+
+{% block content %}
+<h2>Add Drink</h2>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        {{ form.as_p }}
+    </div>
+    <button type="submit" class="btn btn-primary">Save</button>
+    <a href="{% url 'drink_list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
