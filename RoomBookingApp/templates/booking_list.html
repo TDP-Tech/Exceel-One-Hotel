@@ -22,8 +22,8 @@
         <tr>
             <td>{{ booking.room.room_number }}</td>
             <td>{{ booking.customer_name }}</td>
-            <td>{{ booking.check_in_date }}</td>
-            <td>{{ booking.check_out_date }}</td>
+            <td>{{ booking.check_in_date }} at {{ booking.check_in_time }}</td>
+            <td>{{ booking.check_out_date }} at {{ booking.check_out_time }}</td>
             <td>
                 <a href="{% url 'booking_update' booking.pk %}" title="Edit" style="color: #ffc107;"><i class="fas fa-edit"></i></a>
                 <a href="{% url 'booking_delete' booking.pk %}" title="Delete" style="color: #dc3545;"><i class="fas fa-trash-alt"></i></a>                

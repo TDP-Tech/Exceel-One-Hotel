@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Booking Report{% endblock %}
+
+{% block content %}
+<h2>Booking Report</h2>
+
+<form method="get" class="mb-4">
+    <div class="form-row">
+        <div class="col">
+            <input type="date" name="start_date" class="form-control" value="{{ start_date }}" required>
+        </div>
+        <div class="col">
+            <input type="date" name="end_date" class="form-control" value="{{ end_date }}" required>
+        </div>
+        <div class="col">
+            <button type="submit" class="btn btn-primary">Generate Report</button>
+        </div>
+    </div>
+</form>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Room Number</th>
+            <th>Customer Name</th>
+            <th>Check-in Date</th>
+            <th>Check-out Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for booking in bookings %}
+        <tr>
+            <td>{{ booking.room.room_number }}</td>
+            <td>{{ booking.customer_name }}</td>
+            <td>{{ booking.check_in_date }}</td>
+            <td>{{ booking.check_out_date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center">No bookings found for the selected dates.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

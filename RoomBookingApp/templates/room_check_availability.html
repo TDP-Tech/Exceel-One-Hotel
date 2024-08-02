@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Check Room Availability{% endblock %}
+
+{% block content %}
+<style>
+    .availability{
+        padding-top: 16px;
+    }
+</style>
+<div class="container mt-4">
+    <h2>Check Room Availability for the date you want</h2>
+    <form method="get" action="{% url 'check_availability' %}" class="mb-4">
+        <div class="form-row">
+            <div class="col-md-4">
+                <label for="check_in_date">Check-In Date</label>
+                <input type="date" name="check_in_date" id="check_in_date" class="form-control" value="{{ check_in_date }}" required>
+            </div>
+            <div class="col-md-4">
+                <label for="check_in_time">Check-In Time</label>
+                <input type="time" name="check_in_time" id="check_in_time" class="form-control" value="{{ check_in_time }}" required>
+            </div>
+            <div class="col-md-4 mt-4 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary col-12">Check Availability</button>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

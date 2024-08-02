@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Available Rooms{% endblock %}
+
+{% block content %}
+<style>
+    .date-searched {
+        font-size: 25px;
+        text-align: center;
+    }
+    .unavailable {
+        color: white;
+    }
+</style>
+
+<p class="date-searched">
+    Available Rooms for {{ check_in_date }} at {{ check_in_time }}
+</p>
+
+<div class="row">
+    {% for room in available_rooms %}
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ room.room_number }}</h5>
+                    <p class="card-text">Type: {{ room.room_type }}</p>
+                    <p class="card-text">Price: {{ room.price }}</p>
+                    <a href="{% url 'book_room' room.id %}" class="btn btn-primary">Book Now</a>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% for room in unavailable_rooms %}
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ room.room_number }}</h5>
+                    <p class="card-text">Type: {{ room.room_type }}</p>
+                    <p class="card-text">Price: {{ room.price }}</p>
+                    <p class="card-text unavailable btn btn-danger">Unavailable</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<a href="{% url 'check_availability' %}" class="btn btn-secondary">Check Again</a>
+{% endblock %}
