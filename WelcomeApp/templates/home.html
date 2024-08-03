@@ -4,191 +4,245 @@
 
 {% block content %}
 <style>
-    .custom-control {
-        position: absolute;
-        top: 50%;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        text-align: center;
-        cursor: pointer;
-        z-index: 10;
-        transform: translateY(-50%);
-    }
-    
-    .custom-control i {
-        font-size: 20px;
-    }
-    
-    .carousel-control-prev.custom-control {
-        left: 10px;
-    }
-    
-    .carousel-control-next.custom-control {
-        right: 10px;
-    }
-    
-    .custom-control:hover {
-        background-color: rgba(0, 0, 0, 0.7);
-    }
-    
-    .carousel-item {
-        align-items: center; /* Center content vertically */
-        justify-content: center; /* Center content horizontally */
-        overflow: hidden; /* Hide overflow to ensure clean cut-off */
-    }
-
-    .carousel-item img {
-        width: 100vw; /* Full viewport width */
-        height: 500px; 
-        object-fit: cover; /* Cover the entire container while maintaining aspect ratio */
-    }
-
     .carousel-caption {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%); /* Center the caption */
-        color: white;
+        transform: translate(-50%, -50%);
         text-align: center;
-        padding: 20px;
-        border-radius: 10px;
+        padding: 10px;
+        border-radius: 5px;
     }
-
-    /* Carousel Indicators */
-    .carousel-indicators li {
-        background-color: rgba(255, 255, 255, 0.5); /* Semi-transparent black */
-        border-radius: 50%; /* Make them circular */
-        width: 12px; /* Size of the circles */
-        height: 12px; /* Size of the circles */
-        opacity: 0.8; /* Slight transparency */
-    }
-
-    .carousel-indicators .active {
-        background-color: rgba(255, 255, 255, 1); /* Darker color for active indicator */
-        opacity: 1; /* Fully opaque for the active indicator */
-    }
-
-    /* Adjust the position of indicators */
-    .carousel-indicators {
-        bottom: 10px; /* Adjust based on your preference */
-    }
-    .title-description{
+    .carousel-title {
         font-size: 50px;
     }
-    .description-description{
+    .carousel-description {
         font-size: 30px;
+    }
+
+    .carousel-indicators button {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: #fff;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        background: none;
+        border: 2px solid #fff;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 26px;
+    }
+
+    .carousel-control-prev-icon::before,
+    .carousel-control-next-icon::before {
+        content: '';
+        font-family: 'Font Awesome 5 Free';
+        font-weight: 900;
+        color: #fff;
+    }
+
+    .carousel-control-prev-icon::before {
+        content: '\f053'; /* Font Awesome icon for left arrow */
+    }
+
+    .carousel-control-next-icon::before {
+        content: '\f054'; /* Font Awesome icon for right arrow */
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -15px; /* Adjust spacing between columns */
+    }
+
+    .col-md-3 {
+        padding: 0 15px; /* Adjust spacing between columns */
     }
 
     .card {
         display: flex;
-        flex-direction: column; /* Ensure the card content stacks vertically */
-        height: 400px; /* Fixed height for all cards */
+        flex-direction: column;
         border: 1px solid #ddd;
         border-radius: 5px;
-        overflow: hidden; /* Hide overflow to maintain uniform height */
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for better appearance */
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        flex: 1; /* Ensure cards take up equal space */
+        min-height: 350px; /* Adjust this value as needed to ensure uniform height */
     }
 
     .card-img-top {
-        width: 100%; /* Full width */
-        height: 250px; /* Fixed height for images */
-        object-fit: cover; /* Cover the image area while maintaining aspect ratio */
+        width: 100%;
+        height: auto;
+        max-height: 250px; /* Maintain a max height for consistency */
+        object-fit: cover;
     }
 
     .card-body {
-        flex: 1; /* Make card body flexible to fill available space */
+        flex: 1;
         display: flex;
-        flex-direction: column; /* Stack content vertically */
-        justify-content: center; /* Center content vertically */
+        flex-direction: column;
+        justify-content: center;
         padding: 15px;
     }
 
     .card-title {
-        font-size: 1.25rem; /* Font size for card title */
+        font-size: 1.1rem;
         margin-bottom: 0.5rem;
     }
 
     .card-text {
-        font-size: 1rem; /* Font size for card text */
+        font-size: 1rem;
         margin-bottom: 0;
+    }
+
+    .custom-card {
+        background-color: #f8f9fa;
+        color: #000;
+        transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+
+    .custom-card:hover {
+        background-color: #e2e6ea;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transform: scale(1.05);
+    }
+
+    .custom-card:hover .card-title,
+    .custom-card:hover .card-text {
+        animation: fadeInUp 0.5s ease-in-out forwards;
+    }
+
+    @keyframes fadeInUp {
+        0% {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Media Queries for Mobile Friendliness */
+    @media (max-width: 768px) {
+        .col-md-3 {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .card-img-top {
+            max-height: 200px;
+        }
+
+        .card-body {
+            padding: 10px;
+        }
+
+        .card-title {
+            font-size: 1rem;
+        }
+
+        .card-text {
+            font-size: 0.9rem;
+        }
     }
 </style>
 
-
 <div class="container mt-4">
-
-    <!-- Carousel Section -->
-    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-        <ol class="carousel-indicators">
-            {% for image in carousel_images %}
-            <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}"></li>
+    <!-- SLIDING IMAGES -->
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            {% for image in images %}
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{ forloop.counter0 }}" class="{% if forloop.first %}active{% endif %}" aria-current="true" aria-label="Slide {{ forloop.counter }}"></button>
             {% endfor %}
-        </ol>
+        </div>
         <div class="carousel-inner">
-            {% for image in carousel_images %}
-            <div class="carousel-item {% if forloop.first %}active{% endif %}">
-                <img class="d-block w-100" src="{{ image.image.url }}" alt="{{ image.title }}">
-                <div class="carousel-caption d-none d-md-block col-md-12">
-                    <h5 class="title-description">{{ image.title }}</h5>
-                    <p class="description-description">{{ image.description }}</p>
+            {% for image in images %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.alt }}">
+                    <div class="carousel-caption col-md-12 d-none d-md-block">
+                        <h5 class="carousel-title">{{ image.title }}</h5>
+                        <p class="carousel-description">{{ image.description }}</p>
+                    </div>
                 </div>
-            </div>
             {% endfor %}
         </div>
-        <a class="carousel-control-prev custom-control" href="#carouselExampleIndicators" role="button" data-slide="prev">
-            <i class="fas fa-arrow-left"></i>
-            <span class="sr-only">Previous</span>
-        </a>
-        <a class="carousel-control-next custom-control" href="#carouselExampleIndicators" role="button" data-slide="next">
-            <i class="fas fa-arrow-right"></i>
-            <span class="sr-only">Next</span>
-        </a>
-        
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
     </div>
-
-    <!-- Other Sections -->
-<!-- Food Section -->
-<h2>Available Foods</h2>
-<div class="row">
-    {% for food in foods %}
-    <div class="col-md-3 mb-3">
-        <div class="card">
-            {% if food.food_image %}
-            <img src="{{ food.food_image.url }}" class="card-img-top" alt="{{ food.food_name }}">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ food.food_name }}</h5>
-                <p class="card-text">Price: Tsh {{ food.food_price }} /=</p>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
+    <!-- END OF SLIDING IMAGES -->
+    
+    <article>
+        <header>
+            <h2>Available Foods</h2>
+        </header>
+        <section class="row">
+            {% for food in foods %}
+            <article class="col-md-3 mb-3">
+                <div class="card custom-card">
+                    {% if food.food_image %}
+                    <img 
+                        src="{{ food.food_image.url }}" 
+                        srcset="{% if food.food_image_small %}{{ food.food_image_small.url }} 480w, {% endif %}{% if food.food_image_medium %}{{ food.food_image_medium.url }} 768w, {% endif %}{{ food.food_image.url }} 1200w" 
+                        sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw" 
+                        class="card-img-top" 
+                        alt="{{ food.food_name }}"
+                        loading="lazy">
+                    {% endif %}
+                    <div class="card-body">
+                        <h3 class="card-title">{{ food.food_name | upper }}</h3>
+                        <p class="card-text">Price: Tsh {{ food.food_price }} /=</p>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </section>
+    </article>
+    
+    <article>
+        <header>
+            <h2>Drink Samples</h2>
+        </header>
+        <section class="row">
+            {% for drink in drinks %}
+            <article class="col-md-3 mb-3">
+                <div class="card custom-card">
+                    {% if drink.drink_image %}
+                    <img 
+                        src="{{ drink.drink_image.url }}" 
+                        srcset="{% if drink.drink_image_small %}{{ drink.drink_image_small.url }} 480w, {% endif %}{% if drink.drink_image_medium %}{{ drink.drink_image_medium.url }} 768w, {% endif %}{{ drink.drink_image.url }} 1200w" 
+                        sizes="(max-width: 480px) 100vw, (max-width: 768px) 50vw, 33vw" 
+                        class="card-img-top" 
+                        alt="{{ drink.drink_name }}"
+                        loading="lazy">
+                    {% endif %}
+                    <div class="card-body">
+                        <h3 class="card-title">{{ drink.drink_name | upper }} {{ drink.drink_size }}</h3>
+                        <p class="card-text">Price: Tsh {{ drink.drink_price }} /=</p>
+                    </div>
+                </div>
+            </article>
+            {% endfor %}
+        </section>
+    </article>
+    
 </div>
 
-<!-- Drink Samples Section -->
-<h2>Drink Samples</h2>
-<div class="row">
-    {% for drink in drinks %}
-    <div class="col-md-3 mb-3">
-        <div class="card">
-            {% if drink.drink_image %}
-            <img src="{{ drink.drink_image.url }}" class="card-img-top" alt="{{ drink.drink_name }}">
-            {% endif %}
-            <div class="card-body">
-                <h5 class="card-title">{{ drink.drink_name }}</h5>
-                <p class="card-text">Size: {{ drink.drink_size }}</p>
-                <p class="card-text">Price: Tsh {{ drink.drink_price }} /=</p>
-            </div>
-        </div>
-    </div>
-    {% endfor %}
-</div>
- 
-</div>
 {% endblock %}

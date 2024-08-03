@@ -1,98 +1,169 @@
 <style>
-    .footer {
-        background-color: #343a40; /* Dark background color */
-        color: #ffffff; /* White text color */
-        padding: 40px 0;
-        text-align: center;
-    }
-    
-    .footer a {
-        color: #ffffff;
-        text-decoration: none;
-    }
-    
-    .footer a:hover {
-        color: #ffd700; /* Gold color for hover effect */
-        text-decoration: underline;
-    }
-    
-    .footer .social-icons {
-        margin: 20px 0;
-    }
-    
-    .footer .social-icons a {
-        color: #ffffff;
-        margin: 0 10px;
-        font-size: 20px;
-    }
-    
-    .footer .social-icons a:hover {
-        color: #ffd700;
-    }
-    
-    .footer .newsletter {
-        margin: 20px 0;
-    }
-    
-    .footer .newsletter form {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    
-    .footer .newsletter input[type="email"] {
-        padding: 10px;
-        border: none;
-        border-radius: 5px 0 0 5px;
-        width: 250px;
-        font-size: 16px;
-    }
-    
-    .footer .newsletter button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 0 5px 5px 0;
-        background-color: #ffd700; /* Gold background color */
-        color: #343a40; /* Dark text color */
-        font-size: 16px;
-        cursor: pointer;
-    }
-    
-    .footer .newsletter button:hover {
-        background-color: #f1c40f; /* Slightly darker gold */
-    }
-    .designer a{
-        color: darkorchid;
-        text-decoration: none;
-        font-weight: 700;
-    }
-    .designer a:hover {
-        text-decoration: none; /* Optional: add underline on hover for better UX */
-        color: #ffd700; /* Optional: change color on hover */
-    }
-    </style>
-    
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="newsletter">
-                <h5>Subscribe to Our Newsletter</h5>
-                <form action="#" method="post">
-                    <input type="email" name="email" placeholder="Enter your email" required>
-                    <button type="submit">Subscribe</button>
-                </form>
-            </div>
+.footer {
+    background-color: #343a40; /* Dark background color */
+    color: #ffffff; /* White text color */
+    padding: 40px 0;
+    text-align: center;
+}
 
-            <p class="mb-0 designer">© 2024 Exceel One Hotel. All rights reserved | Designed and maintained by <a href="https://github.com/TDP-Tech">TDP Tech</a></p>
-            <p class="mb-0">Address: Kabwe stand Floor 129, Mbeya, Tanzania</p>
-            <p class="mb-0">Contact: +255 757 900 133 | victor@exceelonehotel.co.tz</p>
-            <div class="social-icons">
-                <a href="#"><i class="fab fa-facebook-f"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-                <a href="#"><i class="fab fa-linkedin-in"></i></a>
+.footer a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #ffd700; /* Gold color for hover effect */
+    text-decoration: underline;
+}
+
+.footer .social-icons {
+    margin: 20px 0;
+}
+
+.footer .social-icons a {
+    color: #ffffff;
+    margin: 0 10px;
+    font-size: 20px;
+}
+
+.footer .social-icons a:hover {
+    color: #ffd700;
+}
+
+.footer .newsletter {
+    margin: 20px 0;
+}
+
+.footer .newsletter form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.footer .newsletter input[type="email"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    width: 250px;
+    font-size: 16px;
+}
+
+.footer .newsletter button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    background-color: #ffd700; /* Gold background color */
+    color: #343a40; /* Dark text color */
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.footer .newsletter button:hover {
+    background-color: #f1c40f; /* Slightly darker gold */
+}
+
+.footer .quick-links {
+    margin: 20px 0;
+}
+
+.footer .quick-links h5 {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.footer .quick-links ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer .quick-links ul li {
+    margin-bottom: 5px;
+}
+
+.footer .quick-links ul li a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.footer .quick-links ul li a:hover {
+    color: #ffd700;
+}
+
+.designer a {
+    color: darkorchid;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.designer a:hover {
+    text-decoration: none; /* Optional: add underline on hover for better UX */
+    color: #ffd700; /* Optional: change color on hover */
+}
+</style>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <!-- Quick Links Section -->
+            <div class="col-md-3">
+                <div class="quick-links">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Services</a></li>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
             </div>
-            
+            <!-- Contact Information -->
+            <div class="col-md-3">
+                <h5>Contact Us</h5>
+                <p>Address: Kabwe stand Floor 129, Mbeya, Tanzania</p>
+                <p>Phone: +255 757 900 133</p>
+                <p>Email: victor@exceelonehotel.co.tz</p>
+            </div>
+            <!-- Social Media Icons -->
+            <div class="col-md-3">
+                <h5>Follow Us</h5>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            <!-- Newsletter Subscription -->
+            <div class="col-md-3">
+                <div class="newsletter">
+                    <h5>Subscribe to Our Newsletter</h5>
+                    <form method="post" action="">
+                        {% csrf_token %}
+                        <input type="email" name="email" placeholder="Enter your email" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                    {% if messages %}
+                        <ul id="subscription-messages">
+                            {% for message in messages %}
+                                <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+            </div>
         </div>
-    </footer>
-    
+        <p class="mb-0 designer">© 2024 Exceel One Hotel. All rights reserved | Designed and maintained by <a href="https://github.com/TDP-Tech">TDP Tech</a></p>
+    </div>
+</footer>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const subscriptionMessages = document.getElementById('subscription-messages');
+            if (subscriptionMessages) {
+                setTimeout(function() {
+                    subscriptionMessages.style.display = 'none';
+                }, 3000); // Hide after 3 seconds
+            }
+        });
+    </script>

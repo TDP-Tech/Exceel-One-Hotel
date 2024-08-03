@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Exceel One Hotel{% endblock %}
+
+{% block content %}
+<style>
+/* Basic styles for the about section */
+.about-container {
+    padding: 20px;
+}
+
+.about-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.about-header h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.about-content {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.about-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.about-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+.team-section {
+    margin-bottom: 40px;
+}
+
+.team-member {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.team-member img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.customer-reviews {
+    margin-top: 40px;
+}
+
+.review-stats {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.review-stats h3 {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.review-stats .rating-summary {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.review-stats .rating-summary span {
+    margin: 0 5px;
+}
+
+.star-rating {
+    color: gold;
+    font-size: 1.5rem;
+}
+
+.review {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.review p {
+    font-size: 1rem;
+    line-height: 1.4;
+}
+
+.review h4 {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.review .reviewer-name {
+    font-weight: bold;
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .team-member img {
+        width: 100px;
+        height: 100px;
+    }
+}
+</style>
+
+<div class="about-container">
+    <header class="about-header">
+        <h2>About Exceel One Hotel</h2>
+    </header>
+
+    <section class="about-content">
+        <p>Welcome to Exceel One Hotel, where we provide an unforgettable experience with exceptional service. Our mission is to offer a luxurious and comfortable stay for all our guests, ensuring that every visit is memorable. With a dedicated team and top-notch amenities, we strive to exceed your expectations.</p>
+        <p>Founded in [Year], Exceel One Hotel has grown to become a premier destination for travelers seeking both relaxation and adventure. Our history is rich with stories of excellence, commitment, and innovation, reflecting our ongoing dedication to hospitality.</p>
+        <img src="{{ hotel_images.first.image.url }}" alt="Hotel Image" class="about-image">
+    </section>
+
+    <section class="team-section">
+        <header>
+            <h2>Meet Our Team</h2>
+        </header>
+        <div class="row">
+            {% for team_member in team_members %}
+            <article class="col-md-4 team-member">
+                <img src="{{ team_member.image.url }}" alt="{{ team_member.name }}">
+                <h4>{{ team_member.name }}</h4>
+                <p>{{ team_member.position }}</p>
+            </article>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="customer-reviews">
+        <header class="review-stats">
+            <h2>Customer Reviews</h2>
+            <div class="rating-summary">
+                <div class="star-rating">
+                    {% for i in "12345" %}
+                        {% if i <= average_rating|floatformat:0 %}
+                            ★
+                        {% else %}
+                            ☆
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <span>{{ average_rating|floatformat:1 }} / 5 (Average Rating)</span>
+            </div>
+            <p>{{ total_reviews }} Reviews</p>
+        </header>
+        <div class="container d-flex justify-content-center">
+            <a href="{% url 'reviews' %}" class="btn btn-primary">View more reviews</a>
+        </div>        
+    </section>
+</div>
+{% endblock %}

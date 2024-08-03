@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Africa/Dar_es_Salaam'
 
 USE_I18N = True
 
@@ -122,6 +122,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = 'static/'
+# settings.py
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -132,9 +138,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
-# Contact Information
-CONTACT_INFO = "123 Hotel Street, Mbeya, Tanzania. Phone: +255757900133"
-
 # Google Maps API Key
-GOOGLE_MAPS_API_KEY = 'your-google-maps-api-key'
+# GOOGLE_MAPS_API_KEY = 'your-google-maps-api-key'
+
+# settings.py
+DEFAULT_REVIEW_IMAGE_URL = '/media/review_images/avatar.png'
+

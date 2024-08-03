@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block title %}Customer Reviews{% endblock %}
+
+{% block content %}
+<style>
+/* Include your custom styles here */
+.container {
+    padding: 20px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    background-color: #f8f9fa;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 100px; /* Adjust height as needed */
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    font-style: italic;
+}
+
+.star-rating {
+    font-size: 1.5rem;
+    color: gold;
+    margin-bottom: 1rem;
+}
+
+.star {
+    margin-right: 2px;
+}
+
+.review-form {
+    margin-top: 30px;
+}
+
+.review-form img {
+    max-width: 100px;
+    max-height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.card-body img {
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.card-body p {
+    margin: 0;
+}
+
+.card-body small {
+    color: #6c757d;
+}
+
+.rounded-circle {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+}
+.container-form{
+    padding-top: 5px;
+    margin-top: -65px;
+}
+.star-rating {
+    color: gold;
+    font-size: 1.5rem;
+}
+</style>
+
+<div class="container-form">
+    <section class="review-form">
+        <header>
+            <h2>Submit Your Review</h2>
+        </header>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Submit Review</button>
+        </form>
+    </section>
+</div>
+<div class="container mt-5">
+    <section class="rating-summary">
+        <header>
+            <h2>Customer Reviews</h2>
+        </header>
+        <div class="rating-summary">
+            <button class="btn btn-info btn-lg">
+                Average Rating: <span>{{ average_rating|floatformat:1 }} / 5</span><br>
+                <p class="star-rating">
+                    {% for i in "12345" %}
+                    {% if i <= average_rating|floatformat:0 %}
+                        ★
+                    {% else %}
+                        ☆
+                    {% endif %}
+                    {% endfor %}
+                </p>
+                
+            </button>
+            <p class="mt-2">Based on {{ total_reviews }} reviews</p>
+        </div>
+        
+    </section>
+
+    <section class="review-carousel">
+        <div class="row">
+            {% for review in reviews %}
+            <div class="col-md-4 mb-4">
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <img src="{% if review.customer_image %}{{ review.customer_image.url }}{% else %}{{ default_image_url }}{% endif %}" 
+                             alt="{{ review.customer_name }}" 
+                             class="img-fluid rounded-circle">
+                        <h4 class="card-title">{{ review.customer_name }}</h4>
+                        <div class="star-rating">
+                            {% for i in "12345" %}
+                                {% if i|add:"0" <= review.rating %}
+                                    <span class="star">&#9733;</span>  <!-- Filled star -->
+                                {% else %}
+                                    <span class="star">&#9734;</span>  <!-- Empty star -->
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p class="card-text">{{ review.comment }}</p>
+                        <small>Reviewed on: {{ review.created_at }}</small>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+</div>
+{% endblock %}
