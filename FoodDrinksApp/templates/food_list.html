@@ -3,41 +3,96 @@
 {% block title %}Food List{% endblock %}
 
 {% block content %}
+<style>
+    .card {
+        position: relative;
+        overflow: hidden;
+        width: 100%;
+        height: 100%; /* Allow height to adjust automatically */
+        margin: auto; /* Center card horizontally */
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card-img-top {
+        width: 100%;
+        height: 150px; /* Set a fixed height for images */
+        object-fit: cover;
+        transition: opacity 0.3s ease;
+    }
+
+    .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+        color: white;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px; /* Ensure padding for text visibility */
+        pointer-events: none; /* Allows interactions with buttons */
+    }
+
+    .card:hover .card-img-top {
+        opacity: 0.3; /* Makes the image less visible when hovered */
+    }
+
+    .card:hover .overlay {
+        opacity: 1;
+    }
+
+    .text {
+        font-size: 1.2rem;
+    }
+
+    .card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Media queries for responsive design */
+    @media (max-width: 768px) {
+        .col-md-2 {
+            flex: 0 0 70%; /* Adjust the width of the card for small screens */
+            max-width: 70%; /* Limit the width to 70% */
+            margin: auto; /* Center the card */
+        }
+    }
+</style>
+
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Food List</h2>
     <a href="{% url 'food_create' %}" class="btn btn-primary">Add Food</a>
 </div>
-<table class="table table-bordered">
-    <thead class="table-dark">
-        <tr>
-            <th>S/No</th>
-            <th>Food Name</th>
-            <th>Food Price</th>
-            <th>Food plates</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for food in foods %}
-        <tr>
-            <td>{{ forloop.counter }}</td>
-            <td>{{ food.food_name }}</td>
-            <td>{{ food.food_price }} @plate</td>
-            <td>
-                {{ food.food_amount }} 
-                {% if food.food_amount == 1 %}
-                    plate
-                {% else %}
-                    plates
-                {% endif %}
-            </td>
-            
-            <td>
-                <a href="{% url 'food_update' food.pk %}" title="Edit" style="color: #ffc107;"><i class="fas fa-edit"></i></a>
-                <a href="{% url 'food_delete' food.pk %}" title="Delete" style="color: #dc3545;"><i class="fas fa-trash-alt"></i></a>                
-            </td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="row justify-content-center">
+    {% for food in foods %}
+    <div class="col-md-2 mb-4">
+        <div class="card">
+            {% if food.food_image %}
+            <img src="{{ food.food_image.url }}" class="card-img-top" alt="{{ food.food_name }}">
+            <div class="overlay">
+                <div class="text">{{ food.food_name }}</div>
+            </div>
+            {% endif %}
+            <div class="card-body d-flex flex-column">
+                <p class="card-text">
+                    <strong>{{ food.food_name }}</strong> <br>
+                    <strong>Price:</strong> {{ food.food_price }} @plate<br>
+                </p>
+                <div class="mt-auto">
+                    <a href="{% url 'food_update' food.pk %}" class="btn btn-warning btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                    <a href="{% url 'food_delete' food.pk %}" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

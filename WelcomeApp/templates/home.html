@@ -157,6 +157,10 @@
             font-size: 0.9rem;
         }
     }
+
+    .btn-order {
+        margin-top: 10px;
+    }
 </style>
 
 <div class="container mt-4">
@@ -209,6 +213,7 @@
                     <div class="card-body">
                         <h3 class="card-title">{{ food.food_name | upper }}</h3>
                         <p class="card-text">Price: Tsh {{ food.food_price }} /=</p>
+                        <a href="{% url 'food_order' food.pk %}" class="btn btn-primary btn-order">Order Now</a>
                     </div>
                 </div>
             </article>
@@ -236,6 +241,7 @@
                     <div class="card-body">
                         <h3 class="card-title">{{ drink.drink_name | upper }} {{ drink.drink_size }}</h3>
                         <p class="card-text">Price: Tsh {{ drink.drink_price }} /=</p>
+                        <a href="{% url 'drink_order' drink.pk %}" class="btn btn-primary btn-order">Order Now</a>
                     </div>
                 </div>
             </article>

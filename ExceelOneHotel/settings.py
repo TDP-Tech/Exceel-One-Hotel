@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'FoodDrinksApp',
     'AnnouncementsApp',
     'RoomBookingApp',
+    'AuthenticationApp',
 ]
 
 MIDDLEWARE = [
@@ -138,9 +139,24 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Google Maps API Key
-# GOOGLE_MAPS_API_KEY = 'your-google-maps-api-key'
-
 # settings.py
 DEFAULT_REVIEW_IMAGE_URL = '/media/review_images/avatar.png'
+
+# settings.py
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/Welcome/home/'  # Ensure this is a valid path
+
+
+# LOGOUT_REDIRECT_URL = 'login'
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'tanzaniadigitalprojectstech@gmail.com'
+EMAIL_HOST_PASSWORD = 'samylapqhmhwjfhp'
+
 

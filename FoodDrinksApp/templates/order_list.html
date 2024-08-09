@@ -1,0 +1,52 @@
+<!-- templates/myapp/order_list.html -->
+{% extends 'base.html' %}
+
+{% block title %}Order List{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Order List</h2>
+    <table class="table table-bordered">
+        <thead class="bg-secondary text-white">
+            <tr>
+                <th>S/No</th>
+                <th>Item Name</th>
+                <th>Item Type</th>
+                <th>Quantity</th>
+                <th>Comments</th>
+                <th>Created At</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.get_item_name }}</td>
+                <td>{{ order.get_item_type_display }}</td>
+                <td>{{ order.quantity }}</td>
+                <td>{{ order.comments }}</td>
+                <td>{{ order.created_at }}</td>
+                <td>
+                    {% if order.status == 'pending' %}
+                        <i class="fas fa-hourglass-half text-warning" title="Pending"> pending</i>
+                    {% elif order.status == 'received' %}
+                        <i class="fas fa-check-circle text-success" title="Received"> received</i>
+                    {% elif order.status == 'processed' %}
+                        <i class="fas fa-cogs text-info" title="Processed"> on the way</i>
+                    {% elif order.status == 'cancelled' %}
+                        <i class="fas fa-times-circle text-danger" title="Cancelled"> cancelled</i>
+                    {% else %}
+                        <i class="fas fa-question-circle text-muted" title="Unknown"></i>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7">No orders found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

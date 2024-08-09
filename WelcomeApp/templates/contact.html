@@ -1,0 +1,245 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Exceel One Hotel{% endblock %}
+
+{% block content %}
+    <style>
+        /* Base styles */
+        .contact-header {
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #e7dede;
+            height: 60vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .contact-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .contact-header span {
+            color: #ff7a00;
+        }
+
+        .contact-header p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        .contact-options-wrapper {
+            position: relative;
+            z-index: 2;
+            margin-top: 30px; /* Adjust based on the amount of overlap you want */
+            padding: 0 20px; /* Add padding to avoid content touching the edges */
+        }
+
+        .contact-options {
+            display: flex;
+            flex-wrap: wrap; /* Allows wrapping of contact boxes on smaller screens */
+            justify-content: center;
+            gap: 40px; /* Gap between cards */
+            margin-bottom: 15px;
+            background-color: #fff;
+        }
+
+        .contact-box {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #e6e6e6;
+            width: 300px; /* Fixed width */
+            height: 300px; /* Fixed height */
+            box-sizing: border-box; /* Include padding and border in element's total width and height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contact-box .icon i {
+            font-size: 3rem;
+            color: #007bff;
+        }
+
+        .contact-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .contact-box p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+            color: #777;
+        }
+
+        .contact-button {
+            display: inline-block;
+            text-decoration: none;
+            color: #fff;
+            background-color: #ff7a00;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .contact-footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+            font-size: 0.875rem;
+            color: #777;
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 1200px) {
+            .contact-header h1 {
+                font-size: 2rem;
+            }
+
+            .contact-header p {
+                font-size: 1rem;
+            }
+
+            .contact-box .icon i {
+                font-size: 2.5rem;
+            }
+
+            .contact-box h3 {
+                font-size: 1.25rem;
+            }
+
+            .contact-box p {
+                font-size: 0.875rem;
+            }
+
+            .contact-button {
+                padding: 8px 16px;
+            }
+
+            .contact-footer {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .contact-header {
+                padding: 30px 10px;
+                height: auto;
+            }
+
+            .contact-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .contact-header p {
+                font-size: 0.875rem;
+            }
+
+            .contact-options {
+                padding: 10px;
+            }
+
+            .contact-box {
+                width: 100%; /* Full width on smaller screens */
+                height: auto; /* Height adjusts automatically */
+                max-width: 300px; /* Prevents too large cards */
+            }
+
+            .contact-box .icon i {
+                font-size: 2rem;
+            }
+
+            .contact-box h3 {
+                font-size: 1rem;
+            }
+
+            .contact-box p {
+                font-size: 0.75rem;
+            }
+
+            .contact-button {
+                padding: 8px 16px;
+            }
+
+            .contact-footer {
+                font-size: 0.75rem;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .contact-header h1 {
+                font-size: 1.25rem;
+            }
+
+            .contact-header p {
+                font-size: 0.75rem;
+            }
+
+            .contact-box .icon i {
+                font-size: 1.5rem;
+            }
+
+            .contact-box h3 {
+                font-size: 0.875rem;
+            }
+
+            .contact-box p {
+                font-size: 0.625rem;
+            }
+
+            .contact-button {
+                padding: 6px 12px;
+            }
+
+            .contact-footer {
+                font-size: 0.625rem;
+                padding: 10px;
+            }
+        }
+    </style>
+    <main>
+        <section class="contact-header">
+            <h1>We are here for you, <br> contact us at <span>anytime</span></h1>
+            <p>Got questions about our services or just want to chat? We're here to help—feel free to reach out.</p>
+        </section>
+
+        <div class="contact-options-wrapper">
+            <section class="contact-options">
+                <div class="contact-box">
+                    <div class="icon">
+                        <i class="fas fa-comment-dots" style="color: #007bff;"></i> <!-- Blue Chat Icon -->
+                    </div>
+                    <h3>Chat Now</h3>
+                    <p>Right from this website</p>
+                    <a href="#" class="contact-button">Start chat with us &rarr;</a>
+                </div>
+
+                <div class="contact-box">
+                    <div class="icon">
+                        <i class="fas fa-envelope" style="color: #28a745;"></i> <!-- Green Email Icon -->
+                    </div>
+                    <h3>Email Us</h3>
+                    <p>From your email app</p>
+                    <a href="mailto:support@doormat.ca" class="contact-button">support@exceelonehotel.co</a>
+                </div>
+
+                <div class="contact-box">
+                    <div class="icon">
+                        <i class="fas fa-phone" style="color: #e76975;"></i> <!-- Red Phone Icon -->
+                    </div>
+                    <h3>Call or text us</h3>
+                    <p>From your phone</p>
+                    <a href="tel:+255757900133" class="contact-button">+255 757 900 133</a>
+                </div>
+            </section>
+        </div>
+
+        <section class="contact-footer">
+            <p>We'll get back to you as soon as possible. Our team is available 8am-6pm 24/7 days throughout a year.</p>
+        </section>
+    </main>
+{% endblock %}

@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">Register to Exceel One Hotel</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Username Field -->
+        <div class="mb-3">
+            {{ form.username.label_tag }}
+            {{ form.username }}
+            {% if form.username.errors %}
+                <div class="text-danger">
+                    {{ form.username.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- First Name Field -->
+        <div class="mb-3">
+            {{ form.first_name.label_tag }}
+            {{ form.first_name }}
+            {% if form.first_name.errors %}
+                <div class="text-danger">
+                    {{ form.first_name.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Last Name Field -->
+        <div class="mb-3">
+            {{ form.last_name.label_tag }}
+            {{ form.last_name }}
+            {% if form.last_name.errors %}
+                <div class="text-danger">
+                    {{ form.last_name.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Email Field -->
+        <div class="mb-3">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            {% if form.email.errors %}
+                <div class="text-danger">
+                    {{ form.email.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Password1 Field -->
+        <div class="mb-3">
+            {{ form.password1.label_tag }}
+            {{ form.password1 }}
+            {% if form.password1.errors %}
+                <div class="text-danger">
+                    {{ form.password1.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Password2 Field -->
+        <div class="mb-3">
+            {{ form.password2.label_tag }}
+            {{ form.password2 }}
+            {% if form.password2.errors %}
+                <div class="text-danger">
+                    {{ form.password2.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Role Field -->
+        <div class="mb-3">
+            {{ form.role.label_tag }}
+            {{ form.role }}
+            {% if form.role.errors %}
+                <div class="text-danger">
+                    {{ form.role.errors }}
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Register</button>
+    </form>
+</div>
+{% endblock %}

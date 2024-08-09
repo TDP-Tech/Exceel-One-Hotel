@@ -1,28 +1,54 @@
 # views.py
 
 from django.shortcuts import render, redirect
-from .models import SlideImage, Review, HotelImage
+from .models import SlideImage, Review, HotelImage, TeamMember
 from FoodDrinksApp.models import Food, Drink
 from datetime import datetime
 from django.db.models import Avg, Count
 from .forms import ReviewForm, NewsletterSubscriptionForm
 from django.contrib import messages
+from django.shortcuts import render, get_object_or_404
+from FoodDrinksApp.models import Food, Drink
+from AuthenticationApp.models import UserProfile
 
-
+# @login_required
 def home(request):
+    # Check if the user is authenticated
+    if request.user.is_authenticated:
+        user_profile = UserProfile.objects.filter(user=request.user).first()
+        if user_profile and user_profile.role:  # Check if user_profile and role exist
+            is_admin = user_profile.role.name == 'Admin'
+            is_food_delivery = user_profile.role.name == 'Food Delivery'
+            is_booking_manager = user_profile.role.name == 'Booking Manager'
+        else:
+            is_admin = False
+            is_food_delivery = False
+            is_booking_manager = False
+    else:
+        is_admin = False
+        is_food_delivery = False
+        is_booking_manager = False
+    
+    # Retrieve all relevant data
     foods = Food.objects.all()
     drinks = Drink.objects.all()
     images = SlideImage.objects.filter(is_active=True)
+    
+    # Pass context including role checks and data
     return render(request, 'home.html', {
         'foods': foods,
         'drinks': drinks,
         'images': images,
+        'is_admin': is_admin,
+        'is_food_delivery': is_food_delivery,
+        'is_booking_manager': is_booking_manager,
     })
 
 
 
 def about(request):
     hotel_images = HotelImage.objects.all()
+    team_members = TeamMember.objects.all()
     # Calculate average rating and total number of reviews
     review_stats = Review.objects.aggregate(
         average_rating=Avg('rating'),
@@ -34,6 +60,7 @@ def about(request):
 
     context = {
         'hotel_images': hotel_images,
+        'team_members': team_members,
         'average_rating': average_rating,
         'total_reviews': total_reviews,
         'reviews': Review.objects.all()[:3]  # Fetching top 3 reviews for display
@@ -75,3 +102,6 @@ def newsletter_subscribe(request):
     else:
         form = NewsletterSubscriptionForm()
     return render(request, 'footer.html', {'form': form})
+
+def contact_view(request):
+    return render(request, 'contact.html')

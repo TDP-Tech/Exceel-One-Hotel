@@ -13,4 +13,12 @@ urlpatterns = [
     path('drink/create/', views.drink_create, name='drink_create'),
     path('drink/update/<int:pk>/', views.drink_update, name='drink_update'),
     path('drink/delete/<int:pk>/', views.drink_delete, name='drink_delete'),
+    
+    path('food_order/<int:pk>/', views.food_order, name='food_order'),
+    path('drink_order/<int:pk>/', views.drink_order, name='drink_order'),
+    
+    path('order_process/<str:item_type>/<int:pk>/', views.order_process, name='order_process'),
+    path('order_complete/<int:pk>/<str:item_type>/', views.order_complete, name='order_complete'),
+    path('orders/', views.order_list, name='order_list'),
+    path('my-orders/', views.my_orders, name='my_orders'),
 ]

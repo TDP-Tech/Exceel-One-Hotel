@@ -2,13 +2,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Room, Booking
 from .forms import RoomForm, BookingForm
 from django.db.models import Q
-from datetime import date
+from datetime import date, datetime
+from django.contrib.auth.decorators import login_required
+
 
 # Room Views
 def room_list(request):
     rooms = Room.objects.all()
     return render(request, 'room_list.html', {'rooms': rooms})
 
+@login_required
 def room_create(request):
     if request.method == 'POST':
         form = RoomForm(request.POST)
@@ -19,6 +22,7 @@ def room_create(request):
         form = RoomForm()
     return render(request, 'room_create.html', {'form': form})
 
+@login_required
 def room_update(request, pk):
     room = get_object_or_404(Room, pk=pk)
     if request.method == 'POST':
@@ -30,6 +34,7 @@ def room_update(request, pk):
         form = RoomForm(instance=room)
     return render(request, 'room_update.html', {'form': form})
 
+@login_required
 def room_delete(request, pk):
     room = get_object_or_404(Room, pk=pk)
     if request.method == 'POST':
@@ -38,8 +43,7 @@ def room_delete(request, pk):
     return render(request, 'room_delete.html', {'room': room})
 
 
-from datetime import datetime
-
+@login_required
 def is_room_available(room, check_in_date, check_in_time, check_out_date, check_out_time):
     """
     Check if a room is available for the given date and time range.
@@ -60,6 +64,7 @@ def is_room_available(room, check_in_date, check_in_time, check_out_date, check_
             return False
     return True
 
+@login_required
 def check_availability(request):
     if 'check_in_date' in request.GET and 'check_in_time' in request.GET:
         check_in_date_str = request.GET['check_in_date']
@@ -153,10 +158,12 @@ def check_availability(request):
     
 
 # Booking Views
+@login_required
 def booking_list(request):
-    bookings = Booking.objects.all()
+    bookings = Booking.objects.all().order_by('-id')
     return render(request, 'booking_list.html', {'bookings': bookings})
 
+@login_required
 def booking_create(request):
     if request.method == 'POST':
         form = BookingForm(request.POST)
@@ -177,6 +184,7 @@ def booking_create(request):
         form = BookingForm()
     return render(request, 'booking_create.html', {'form': form})
 
+@login_required
 def booking_update(request, pk):
     booking = get_object_or_404(Booking, pk=pk)
     if request.method == 'POST':
@@ -198,6 +206,7 @@ def booking_update(request, pk):
         form = BookingForm(instance=booking)
     return render(request, 'booking_update.html', {'form': form})
 
+@login_required
 def booking_delete(request, pk):
     booking = get_object_or_404(Booking, pk=pk)
     if request.method == 'POST':
@@ -205,7 +214,22 @@ def booking_delete(request, pk):
         return redirect('booking_list')
     return render(request, 'booking_delete.html', {'booking': booking})
 
-    
+# @login_required
+# def book_room(request, room_id):
+#     room = get_object_or_404(Room, id=room_id)
+#     if request.method == 'POST':
+#         form = BookingForm(request.POST)
+#         if form.is_valid():
+#             booking = form.save(commit=False)
+#             booking.room = room
+#             booking.save()
+#             return redirect('booking_list')
+#     else:
+#         form = BookingForm()
+#     return render(request, 'book_room.html', {'form': form, 'room': room})
+
+
+@login_required
 def book_room(request, room_id):
     room = get_object_or_404(Room, id=room_id)
     if request.method == 'POST':
@@ -213,14 +237,16 @@ def book_room(request, room_id):
         if form.is_valid():
             booking = form.save(commit=False)
             booking.room = room
+            booking.user = request.user  # Set the user to the currently logged-in user
             booking.save()
-            return redirect('booking_list')
+            return redirect('my_orders')
     else:
         form = BookingForm()
     return render(request, 'book_room.html', {'form': form, 'room': room})
 
 
 # Booking Report View
+@login_required
 def booking_report(request):
     bookings = Booking.objects.all()
     start_date = request.GET.get('start_date')

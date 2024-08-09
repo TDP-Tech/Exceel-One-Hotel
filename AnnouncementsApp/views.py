@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 from .models import Announcement
 from .forms import AnnouncementForm
+
 
 def announcement_list(request):
     announcements = Announcement.objects.all()
     return render(request, 'announcement_list.html', {'announcements': announcements})
 
+@login_required
 def announcement_create(request):
     if request.method == 'POST':
         form = AnnouncementForm(request.POST)
@@ -16,6 +19,7 @@ def announcement_create(request):
         form = AnnouncementForm()
     return render(request, 'announcement_create.html', {'form': form})
 
+@login_required
 def announcement_update(request, pk):
     announcement = get_object_or_404(Announcement, pk=pk)
     if request.method == 'POST':
@@ -27,6 +31,7 @@ def announcement_update(request, pk):
         form = AnnouncementForm(instance=announcement)
     return render(request, 'announcement_update.html', {'form': form})
 
+@login_required
 def announcement_delete(request, pk):
     announcement = get_object_or_404(Announcement, pk=pk)
     if request.method == 'POST':

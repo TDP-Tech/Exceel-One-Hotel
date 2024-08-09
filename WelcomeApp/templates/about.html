@@ -105,12 +105,111 @@
 .review .reviewer-name {
     font-weight: bold;
 }
+p.team-members{
+    font-size: 30px;
+    text-align: center;
+}
+
+/* Add Swiper Styles */
+.slide-container {
+    max-width: 1120px;
+    width: 100%;
+    padding: 40px 0;
+}
+.slide-content {
+    margin: 0 40px;
+    overflow: hidden;
+    border-radius: 25px;
+}
+.card {
+    border-radius: 25px;
+    background-color: #FFF;
+}
+.image-content,
+.card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 14px;
+}
+.image-content {
+    position: relative;
+    row-gap: 5px;
+    padding: 25px 0;
+}
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: #4070F4;
+    border-radius: 25px 25px 0 25px;
+}
+.card-image {
+    position: relative;
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+    background: #FFF;
+    padding: 3px;
+}
+.card-image .card-img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid #4070F4;
+}
+.name {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+.description {
+    font-size: 14px;
+    color: #707070;
+    text-align: center;
+}
+.button {
+    border: none;
+    font-size: 16px;
+    color: #FFF;
+    padding: 8px 16px;
+    background-color: #4070F4;
+    border-radius: 6px;
+    margin: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+}
+.button:hover {
+    background: #265DF2;
+    text-decoration: none;
+}
+
+.swiper-navBtn {
+    color: #6E93f7;
+    transition: color 0.3s ease;
+}
+.swiper-navBtn:hover {
+    color: #4070F4;
+}
+.swiper-pagination-bullet {
+    background-color: #6E93f7;
+    opacity: 1;
+}
+.swiper-pagination-bullet-active {
+    background-color: #4070F4;
+}
 
 /* Media Queries */
 @media (max-width: 768px) {
-    .team-member img {
-        width: 100px;
-        height: 100px;
+    .slide-content {
+        margin: 0 10px;
+    }
+    .swiper-navBtn {
+        display: none;
     }
 }
 </style>
@@ -122,28 +221,43 @@
 
     <section class="about-content">
         <p>Welcome to Exceel One Hotel, where we provide an unforgettable experience with exceptional service. Our mission is to offer a luxurious and comfortable stay for all our guests, ensuring that every visit is memorable. With a dedicated team and top-notch amenities, we strive to exceed your expectations.</p>
-        <p>Founded in [Year], Exceel One Hotel has grown to become a premier destination for travelers seeking both relaxation and adventure. Our history is rich with stories of excellence, commitment, and innovation, reflecting our ongoing dedication to hospitality.</p>
+        <p>Founded in [2024], Exceel One Hotel has grown to become a premier destination for travelers seeking both relaxation and adventure. Our history is rich with stories of excellence, commitment, and innovation, reflecting our ongoing dedication to hospitality.</p>
         <img src="{{ hotel_images.first.image.url }}" alt="Hotel Image" class="about-image">
     </section>
 
     <section class="team-section">
         <header>
-            <h2>Meet Our Team</h2>
+            <p class="team-members">Meet Our Team</p>
         </header>
-        <div class="row">
-            {% for team_member in team_members %}
-            <article class="col-md-4 team-member">
-                <img src="{{ team_member.image.url }}" alt="{{ team_member.name }}">
-                <h4>{{ team_member.name }}</h4>
-                <p>{{ team_member.position }}</p>
-            </article>
-            {% endfor %}
+        <div class="slide-container swiper">
+            <div class="slide-content">
+                <div class="card-wrapper swiper-wrapper">
+                    {% for team_member in team_members %}
+                    <div class="card swiper-slide">
+                        <div class="image-content">
+                            <span class="overlay"></span>
+                            <div class="card-image">
+                                <img src="{{ team_member.image.url }}" alt="{{ team_member.name }}" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name">{{ team_member.full_name }}</h2>
+                            <p class="description">{{ team_member.position }}</p>
+                            <a href="#" class="button">View More</a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="swiper-button-next swiper-navBtn"></div>
+            <div class="swiper-button-prev swiper-navBtn"></div>
+            <div class="swiper-pagination"></div>
         </div>
     </section>
 
     <section class="customer-reviews">
         <header class="review-stats">
-            <h2>Customer Reviews</h2>
+            <p class="team-members">Customer Reviews</p>
             <div class="rating-summary">
                 <div class="star-rating">
                     {% for i in "12345" %}
@@ -163,4 +277,41 @@
         </div>        
     </section>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".slide-content", {
+        slidesPerView: 3,
+        spaceBetween: 25,
+        loop: true,
+        centerSlide: 'true',
+        fade: 'true',
+        grabCursor: 'true',
+        autoplay: {
+            delay: 3000, // Slide change delay in milliseconds (3 seconds)
+            disableOnInteraction: false, // Keeps autoplay running even after user interaction
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+            dynamicBullets: true,
+        },
+        navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+        },
+        breakpoints: {
+            0: {
+                slidesPerView: 1,
+            },
+            520: {
+                slidesPerView: 2,
+            },
+            950: {
+                slidesPerView: 3,
+            },
+        },
+    });
+</script>
+
 {% endblock %}

@@ -1,7 +1,7 @@
 # admin.py
 
 from django.contrib import admin
-from .models import SlideImage, HotelImage, Review, NewsletterSubscriber
+from .models import SlideImage, HotelImage, Review, NewsletterSubscriber, TeamMember
 
 class SlideImageAdmin(admin.ModelAdmin):
     list_display = ('title', 'is_active')
@@ -24,10 +24,15 @@ class NewsletterSubscriberAdmin(admin.ModelAdmin):
     list_display = ('email', 'subscription_date')
     search_fields = ('email',)
     
+
+class TeamMemberAdmin(admin.ModelAdmin):
+    list_display = ('full_name', 'position')
+    
 # Register your models with the admin site
 admin.site.register(Review, ReviewAdmin)
 admin.site.register(SlideImage, SlideImageAdmin)
 admin.site.register(HotelImage, HotelImageAdmin)
 admin.site.register(NewsletterSubscriber, NewsletterSubscriberAdmin)
+admin.site.register(TeamMember, TeamMemberAdmin)
 
-    
+
