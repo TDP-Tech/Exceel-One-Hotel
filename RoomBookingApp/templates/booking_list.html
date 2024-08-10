@@ -3,10 +3,17 @@
 {% block title %}Booking List{% endblock %}
 
 {% block content %}
+
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h2>Bookings</h2>
-    <!-- <a href="{% url 'booking_create' %}" class="btn btn-primary">Add Booking</a> -->
+    <h2></h2>
+    {% with user.userprofile.role as role %}
+        {% if role.name == 'Admin' %}
+            <a href="{% url 'booking_create' %}" class="btn btn-primary">Add Booking</a>
+        {% endif %}
+    {% endwith %}
 </div>
+{% if bookings %}
+<h2>Bookings</h2>
 <table class="table table-bordered">
     <thead class="table-dark">
         <tr>
@@ -36,4 +43,9 @@
         {% endfor %}
     </tbody>
 </table>
+{% else %}
+    <div class="container d-flex justify-content-center align-items-center">
+        <p class="alert alert-warning">There is no booking history or list available</p>
+    </div>
+{% endif %}
 {% endblock %}

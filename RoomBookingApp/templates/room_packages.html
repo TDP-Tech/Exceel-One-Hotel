@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Room Packages{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row justify-content-center">
+        <div class="col-md-3">
+            <div class="card shadow-lg rounded">
+                <!-- Room Details Section -->
+                <div class="card-body bg-light rounded-top">
+                    <h5 class="card-title text-center">Room Details</h5>
+                    <hr>
+                    <p class="card-text"><strong>Room Number:</strong> {{ room.room_number }}</p>
+                    <p class="card-text"><strong>Type:</strong> {{ room.room_type }}</p>
+                    <p class="card-text"><strong>Price:</strong> {{ room.price }}/= Tsh</p>
+                </div>
+                <!-- Packages Section -->
+                <div class="card-body bg-primary text-white rounded-bottom">
+                    <h5 class="card-title text-center">Available Packages</h5>
+                    <hr class="bg-white">
+                    <div class="list-group">
+                        {% for package in packages %}
+                        <div class="list-group-item bg-primary text-white border-0 mb-2 rounded">
+                            <h6 class="mb-1">{{ package.package_name }}</h6>
+                            <p class="mb-1">{{ package.description }}</p>
+                        </div>
+                        {% empty %}
+                        <div class="list-group-item bg-primary text-white border-0 rounded">
+                            <p>No packages available for this room.</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- Back to Availability Button -->
+                <div class="card-body text-center">
+                    <a href="{% url 'check_availability' %}" class="btn btn-outline-secondary btn-lg">Back to
+                        Availability</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

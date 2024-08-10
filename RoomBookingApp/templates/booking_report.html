@@ -3,44 +3,61 @@
 {% block title %}Booking Report{% endblock %}
 
 {% block content %}
-<h2>Booking Report</h2>
+<style>
+    .booking {
+        font-size: 25px;
+        margin-bottom: 20px;
+    }
+</style>
+
+<p class="booking">Enter a date range to generate a Booking Report.</p>
 
 <form method="get" class="mb-4">
-    <div class="form-row">
-        <div class="col">
-            <input type="date" name="start_date" class="form-control" value="{{ start_date }}" required>
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <input type="date" name="start_date" class="form-control" value="{{ start_date }}" placeholder="Enter start date" required>
         </div>
-        <div class="col">
-            <input type="date" name="end_date" class="form-control" value="{{ end_date }}" required>
+        <div class="col-md-4 mb-3">
+            <input type="date" name="end_date" class="form-control" value="{{ end_date }}" placeholder="Enter end date" required>
         </div>
-        <div class="col">
-            <button type="submit" class="btn btn-primary">Generate Report</button>
+        <div class="col-md-4 mb-3">
+            <button type="submit" class="btn btn-primary w-100">Generate Report</button>
         </div>
     </div>
 </form>
 
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Room Number</th>
-            <th>Customer Name</th>
-            <th>Check-in Date</th>
-            <th>Check-out Date</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for booking in bookings %}
-        <tr>
-            <td>{{ booking.room.room_number }}</td>
-            <td>{{ booking.customer_name }}</td>
-            <td>{{ booking.check_in_date }}</td>
-            <td>{{ booking.check_out_date }}</td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="4" class="text-center">No bookings found for the selected dates.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% if bookings %}
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead class="table-dark">
+                <tr>
+                    <th>ROOM NUMBER</th>
+                    <th>CUSTOMER NAME</th>
+                    <th>CHECK-IN DATE</th>
+                    <th>CHECK-OUT DATE</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for booking in bookings %}
+                <tr>
+                    <td>{{ booking.room.room_number }}</td>
+                    <td>{{ booking.customer_name }}</td>
+                    <td>{{ booking.check_in_date }}</td>
+                    <td>{{ booking.check_out_date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No bookings found for the selected dates.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% else %}
+    <div class="container d-flex justify-content-center align-items-center">
+        <p class="alert alert-secondary col-md-3 text-center text-warning col-md-4">
+            <i class="fas fa-exclamation-triangle"></i> No bookings found for the selected dates.
+        </p>
+    </div>
+{% endif %}
 {% endblock %}

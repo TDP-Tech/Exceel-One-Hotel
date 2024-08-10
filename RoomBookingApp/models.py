@@ -55,3 +55,14 @@ class Booking(models.Model):
     def save(self, *args, **kwargs):
         self.clean()
         super().save(*args, **kwargs)
+
+
+class Package(models.Model):
+    room = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='packages')
+    package_name = models.CharField(max_length=100)
+    description = models.TextField()
+    
+    def __str__(self):
+        return self.package_name
+    
+

@@ -1,5 +1,5 @@
 from django import forms
-from .models import Food, Drink
+from .models import Food, Drink, Order
 
 class FoodForm(forms.ModelForm):
     class Meta:
@@ -37,15 +37,12 @@ class DrinkForm(forms.ModelForm):
             'drink_image': 'Drink Image',
         }
 
-class OrderForm(forms.Form):
-    STATUS_CHOICES = [
-        ('received', 'Received'),
-        ('pending', 'Pending'),
-        ('processed', 'Processed'),
-        ('cancelled', 'Cancelled'),
-    ]
-    
-    quantity = forms.IntegerField(min_value=1, label='Quantity')
-    comments = forms.CharField(required=False, widget=forms.Textarea, label='Comments')
-    status = forms.ChoiceField(choices=STATUS_CHOICES, initial='received', label='Status')
 
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['quantity', 'comments', 'status']
+        widgets = {
+            'comments': forms.Textarea(attrs={'rows': 4}),
+        }

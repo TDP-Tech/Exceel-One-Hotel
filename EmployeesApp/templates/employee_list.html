@@ -5,35 +5,48 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-3">
     <h2>Employees</h2>
-    <a href="{% url 'employee_create' %}" class="btn btn-primary">Add new Employee</a>
+    {% with user.userprofile.role as role %}
+        {% if role.name == 'Admin' %}
+            <a href="{% url 'employee_create' %}" class="btn btn-primary">Add new Employee</a>
+        {% endif %}
+    {% endwith %}
 </div>
 <table class="table table-bordered">
     <thead class="table-dark">
         <tr>
             <th>S/No</th>
-            <th>First Name</th>
-            <th>Middle Name</th>
-            <th>Last Name</th>
-            <th>Role</th>
-            <th>Email</th>
-            <th>Phone Number</th>
-            <th>Actions</th>
+            <th>FIRST NAME</th>
+            <th>MIDDLE NAME</th>
+            <th>LAST NAME</th>
+            <th>ROLE</th>
+            <th>EMAIL</th>
+            <th>PHONE NUMBER</th>
+            {% with user.userprofile.role as role %}
+                {% if role.name == 'Admin' %}
+                <th>ACTIONS</th>
+                {% endif %}
+            {% endwith %}
         </tr>
     </thead>
     <tbody>
         {% for employee in employees %}
         <tr>
-            <td>{{ forloop.counter }}</td>
+            <td>{{ employee.id }}</td>
             <td>{{ employee.first_name }}</td>
             <td>{{ employee.middle_name }}</td>
             <td>{{ employee.last_name }}</td>
             <td>{{ employee.role }}</td>
             <td>{{ employee.email }}</td>
             <td>{{ employee.phone_number }}</td>
-            <td>
-                <a href="{% url 'employee_update' employee.pk %}" title="Edit" style="color: #ffc107;"><i class="fas fa-edit"></i></a>
-                <a href="{% url 'employee_delete' employee.pk %}" title="Delete" style="color: #dc3545;"><i class="fas fa-trash-alt"></i></a>                
-            </td> 
+            {% with user.userprofile.role as role %}
+                {% if role.name == 'Admin' %}
+                <td>
+                    <a href="{% url 'employee_update' employee.pk %}" title="Edit" style="color: #ffc107;"><i class="fas fa-edit"></i></a>
+                    <a href="{% url 'employee_delete' employee.pk %}" title="Delete" style="color: #dc3545;"><i class="fas fa-trash-alt"></i></a>                
+                </td>
+                {% endif %}
+            {% endwith %}
+             
         </tr>
         {% endfor %}
     </tbody>

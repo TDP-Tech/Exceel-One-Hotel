@@ -3,6 +3,8 @@
 {% block title %}Update Food{% endblock %}
 
 {% block content %}
+{% with user.userprofile.role as role %}
+{% if role.name == 'Admin' %}
 <h2>Update Food</h2>
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
@@ -12,4 +14,13 @@
     <button type="submit" class="btn btn-primary">Save changes</button>
     <a href="{% url 'food_list' %}" class="btn btn-secondary">Cancel</a>
 </form>
+{% else %}
+<div class="container d-flex justify-content-center align-items-center">
+    <p class="alert alert-info col-md-3 text-center text-danger col-md-4">
+        <i class="fas fa-exclamation-triangle"></i> Don't have permission to update food item.
+    </p>
+</div>
+{% endif %}
+{% endwith %}
+
 {% endblock %}

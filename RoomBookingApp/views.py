@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 
 # Room Views
+@login_required
 def room_list(request):
     rooms = Room.objects.all()
     return render(request, 'room_list.html', {'rooms': rooms})
@@ -98,65 +99,6 @@ def check_availability(request):
     
     return render(request, 'room_check_availability.html')
 
-
-
-
-# def is_room_available(room, check_in_date, check_in_time, check_out_date, check_out_time):
-#     """
-#     Check if a room is available for the given date and time range.
-#     """
-#     # Convert string inputs to date objects
-#     check_in_date = datetime.strptime(check_in_date, '%Y-%m-%d').date()
-#     check_out_date = datetime.strptime(check_out_date, '%Y-%m-%d').date()
-    
-#     # Combine date and time into datetime objects
-#     check_in_datetime = datetime.combine(check_in_date, check_in_time)
-#     check_out_datetime = datetime.combine(check_out_date, check_out_time)
-    
-#     # Get all bookings for the specified room
-#     bookings = Booking.objects.filter(room=room)
-#     for booking in bookings:
-#         # Convert existing bookings to datetime objects
-#         existing_check_in_datetime = datetime.combine(booking.check_in_date, booking.check_in_time)
-#         existing_check_out_datetime = datetime.combine(booking.check_out_date, booking.check_out_time)
-        
-#         # Check for overlap
-#         if (check_in_datetime < existing_check_out_datetime and check_out_datetime > existing_check_in_datetime):
-#             return False
-#     return True
-
-# def check_availability(request):
-#     if 'check_in_date' in request.GET and 'check_in_time' in request.GET:
-#         check_in_date = request.GET['check_in_date']
-#         check_in_time = request.GET['check_in_time']
-        
-#         # Convert time string to time object
-#         check_in_time = datetime.strptime(check_in_time, '%H:%M').time()
-        
-#         # Fetch all rooms and filter them based on availability
-#         rooms = Room.objects.all()
-#         available_rooms = []
-#         unavailable_rooms = []
-
-#         for room in rooms:
-#             if is_room_available(room, check_in_date, check_in_time, check_in_date, check_in_time):
-#                 available_rooms.append(room)
-#             else:
-#                 unavailable_rooms.append(room)
-        
-#         return render(request, 'room_availability_results.html', {
-#             'available_rooms': available_rooms,
-#             'unavailable_rooms': unavailable_rooms,
-#             'check_in_date': check_in_date,
-#             'check_in_time': check_in_time,
-#         })
-    
-#     return render(request, 'room_check_availability.html')
-
-
-
-    
-
 # Booking Views
 @login_required
 def booking_list(request):
@@ -169,6 +111,7 @@ def booking_create(request):
         form = BookingForm(request.POST)
         if form.is_valid():
             booking = form.save(commit=False)
+            booking.user = request.user  # Assign the current user to the booking
             if is_room_available(
                 booking.room, 
                 booking.check_in_date, 
@@ -183,6 +126,7 @@ def booking_create(request):
     else:
         form = BookingForm()
     return render(request, 'booking_create.html', {'form': form})
+
 
 @login_required
 def booking_update(request, pk):
@@ -214,20 +158,6 @@ def booking_delete(request, pk):
         return redirect('booking_list')
     return render(request, 'booking_delete.html', {'booking': booking})
 
-# @login_required
-# def book_room(request, room_id):
-#     room = get_object_or_404(Room, id=room_id)
-#     if request.method == 'POST':
-#         form = BookingForm(request.POST)
-#         if form.is_valid():
-#             booking = form.save(commit=False)
-#             booking.room = room
-#             booking.save()
-#             return redirect('booking_list')
-#     else:
-#         form = BookingForm()
-#     return render(request, 'book_room.html', {'form': form, 'room': room})
-
 
 @login_required
 def book_room(request, room_id):
@@ -242,9 +172,25 @@ def book_room(request, room_id):
             return redirect('my_orders')
     else:
         form = BookingForm()
-    return render(request, 'book_room.html', {'form': form, 'room': room})
 
+    # Fetch the available packages for the room
+    packages = room.packages.all()
 
+    return render(request, 'book_room.html', {
+        'form': form,
+        'room': room,
+        'packages': packages,
+    })
+
+@login_required
+def room_packages(request, room_id):
+    room = get_object_or_404(Room, id=room_id)
+    packages = room.packages.all()  # Assuming you have related_name='packages' on Package model
+
+    return render(request, 'room_packages.html', {
+        'room': room,
+        'packages': packages,
+    })
 # Booking Report View
 @login_required
 def booking_report(request):

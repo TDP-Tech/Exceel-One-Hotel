@@ -90,10 +90,48 @@ def drink_order(request, pk):
     drink = get_object_or_404(Drink, pk=pk)
     return render(request, 'drink_order.html', {'drink': drink})
 
-# this is admin or staff who deliver orders
+# # this is admin or staff who deliver orders
+# @login_required
+# def order_process(request, item_type, pk):
+#     # Fetch the item based on item_type and pk
+#     if item_type == 'food':
+#         item = get_object_or_404(Food, pk=pk)
+#     elif item_type == 'drink':
+#         item = get_object_or_404(Drink, pk=pk)
+#     else:
+#         return HttpResponse("Invalid item type", status=400)
+
+#     if request.method == 'POST':
+#         form = OrderForm(request.POST)
+#         if form.is_valid():
+#             quantity = form.cleaned_data['quantity']
+#             comments = form.cleaned_data['comments']
+#             status = form.cleaned_data['status']
+            
+#             if quantity <= 0:
+#                 return HttpResponse("Quantity must be greater than zero.", status=400)
+            
+#             # Save the order with the logged-in user
+#             Order.objects.create(
+#                 user=request.user,  # Associate order with the current user
+#                 item_type=item_type,
+#                 item_id=item.id,
+#                 quantity=quantity,
+#                 comments=comments,
+#                 status='pending'
+#             )
+            
+#             # Redirect to the order list page after placing the order
+#             # return redirect('order_list')
+#             return redirect('my_orders')
+#     else:
+#         form = OrderForm()
+    
+#     return render(request, 'order_process.html', {'form': form, 'item': item, 'item_type': item_type})
+
+#######################
 @login_required
 def order_process(request, item_type, pk):
-    # Fetch the item based on item_type and pk
     if item_type == 'food':
         item = get_object_or_404(Food, pk=pk)
     elif item_type == 'drink':
@@ -111,24 +149,46 @@ def order_process(request, item_type, pk):
             if quantity <= 0:
                 return HttpResponse("Quantity must be greater than zero.", status=400)
             
-            # Save the order with the logged-in user
             Order.objects.create(
                 user=request.user,  # Associate order with the current user
                 item_type=item_type,
                 item_id=item.id,
                 quantity=quantity,
                 comments=comments,
-                status='pending'
+                status=status
             )
-            
-            # Redirect to the order list page after placing the order
-            # return redirect('order_list')
             return redirect('my_orders')
     else:
         form = OrderForm()
     
     return render(request, 'order_process.html', {'form': form, 'item': item, 'item_type': item_type})
 
+@login_required
+def order_update(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    
+    if request.method == 'POST':
+        form = OrderForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('order_list')
+    else:
+        form = OrderForm(instance=order)
+    
+    return render(request, 'order_update.html', {'form': form, 'order': order})
+
+
+@login_required
+def order_delete(request, pk):
+    order = get_object_or_404(Order, pk=pk)
+    if request.method == 'POST':
+        order.delete()
+        return redirect('order_list')  # Redirect to the order list or a confirmation page
+    return render(request, 'order_delete.html', {'order': order})
+
+
+
+#######################
 @login_required
 def order_complete(request, pk, item_type):
     if request.method == 'POST':

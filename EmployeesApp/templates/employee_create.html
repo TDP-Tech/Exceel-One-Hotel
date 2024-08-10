@@ -3,13 +3,17 @@
 {% block title %}Add Employee{% endblock %}
 
 {% block content %}
-<h2>Add Employee</h2>
-<form method="post">
-    {% csrf_token %}
-    <div class="form-group">
-        {{ form.as_p }}
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
-    <a href="{% url 'employee_list' %}" class="btn btn-secondary">Cancel</a>
-</form>
+{% with user.userprofile.role as role %}
+    {% if role.name == 'Admin' %}
+    <h2>Add Employee</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <a href="{% url 'employee_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+    {% endif %}
+{% endwith %}
 {% endblock %}

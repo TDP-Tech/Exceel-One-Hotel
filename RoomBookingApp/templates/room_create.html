@@ -1,9 +1,16 @@
 {% extends 'base.html' %}
 
-{% block title %}Add Room{% endblock %}
+{% block title %}Add Booking{% endblock %}
 
 {% block content %}
-<h2>Add Room</h2>
+<style>
+    .addroom{
+        font-size: 25px;
+    }
+</style>
+{% with user.userprofile.role as role %}
+{% if role.name == 'Admin' %}
+<p class="addroom">Add Room</p>
 <form method="post">
     {% csrf_token %}
     <div class="form-group">
@@ -12,4 +19,12 @@
     <button type="submit" class="btn btn-primary">Save</button>
     <a href="{% url 'room_list' %}" class="btn btn-secondary">Cancel</a>
 </form>
+{% else %}
+    <div class="container d-flex justify-content-center align-items-center">
+        <p class="alert alert-secondary col-md-3 text-center text-danger col-md-4">
+            <i class="fas fa-exclamation-triangle"></i> Don't have permission to create rooms.
+        </p>
+    </div>
+{% endif %}
+{% endwith %}
 {% endblock %}

@@ -1,12 +1,22 @@
-{% extends 'base.html' %}
+<h2>Booking for Room {{ room.room_number }}</h2>
 
-{% block title %}Book Room{% endblock %}
-
-{% block content %}
-<h2>Book Room {{ room.room_number }}</h2>
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit" class="btn btn-primary">Book</button>
+    
+    <h5>Select a Package:</h5>
+    {% if packages %}
+        <ul>
+            {% for package in packages %}
+                <li>
+                    <input type="checkbox" name="package" value="{{ package.id }}">
+                    {{ package.name }} - {{ package.price }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No packages available for this room.</p>
+    {% endif %}
+    
+    <button type="submit" class="btn btn-success">Book Now</button>
 </form>
-{% endblock %}

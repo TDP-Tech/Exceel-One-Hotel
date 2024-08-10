@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Delete Room{% endblock %}
+{% block title %}Add Booking{% endblock %}
 
 {% block content %}
+{% with user.userprofile.role as role %}
+{% if role.name == 'Admin' %}
 <h2>Delete Room</h2>
 <p>Are you sure you want to delete room "{{ room.room_number }}"?</p>
 <form method="post">
@@ -10,4 +12,12 @@
     <button type="submit" class="btn btn-danger">Confirm Delete</button>
     <a href="{% url 'room_list' %}" class="btn btn-secondary">Cancel</a>
 </form>
+{% else %}
+    <div class="container d-flex justify-content-center align-items-center">
+        <p class="alert alert-secondary col-md-3 text-center text-danger col-md-4">
+            <i class="fas fa-exclamation-triangle"></i> Don't have permission to create rooms.
+        </p>
+    </div>
+{% endif %}
+{% endwith %}
 {% endblock %}

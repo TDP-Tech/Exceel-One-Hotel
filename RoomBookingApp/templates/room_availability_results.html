@@ -11,6 +11,9 @@
     .unavailable {
         color: white;
     }
+    .package-list {
+        margin-top: 10px;
+    }
 </style>
 
 <p class="date-searched">
@@ -28,7 +31,7 @@
                     <p class="card-text">Type: {{ room.room_type }}</p>
                     <p class="card-text">Price: {{ room.price }}</p>
                     <a href="{% url 'book_room' room.id %}" class="btn btn-primary">Book Now</a>
-                    <a href="#" class="btn btn-primary">Packages</a>
+                    <a href="{% url 'room_packages' room.id %}" class="btn btn-secondary">View Packages</a>
                 </div>
             </div>
         </div>
@@ -47,6 +50,5 @@
         </div>
     {% endfor %}
 </div>
-
 
 {% endblock %}

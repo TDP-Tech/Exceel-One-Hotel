@@ -18,6 +18,11 @@ urlpatterns = [
     path('drink_order/<int:pk>/', views.drink_order, name='drink_order'),
     
     path('order_process/<str:item_type>/<int:pk>/', views.order_process, name='order_process'),
+    
+    ###########
+    path('orders/<int:pk>/update/', views.order_update, name='order_update'),
+    path('orders/<int:pk>/delete/', views.order_delete, name='order_delete'),
+    ###########
     path('order_complete/<int:pk>/<str:item_type>/', views.order_complete, name='order_complete'),
     path('orders/', views.order_list, name='order_list'),
     path('my-orders/', views.my_orders, name='my_orders'),

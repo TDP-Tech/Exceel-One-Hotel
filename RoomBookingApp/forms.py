@@ -7,7 +7,7 @@ class RoomForm(forms.ModelForm):
         fields = ['room_number', 'room_type', 'price']
         widgets = {
             'room_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter room number'}),
-            'room_type': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter room type'}),
+            'room_type': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Enter room type, eg SINGLE, MASTER ROOM e.t.c'}),
             'price': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Enter room price'}),
         }
         labels = {
@@ -62,3 +62,5 @@ class BookingForm(forms.ModelForm):
                 if (check_in_date <= booking.check_out_date and check_out_date >= booking.check_in_date):
                     if (check_in_time < booking.check_out_time and check_out_time > booking.check_in_time):
                         raise ValidationError("This room is already booked for the selected time.")
+
+

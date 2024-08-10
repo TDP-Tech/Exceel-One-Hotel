@@ -1,13 +1,23 @@
 {% extends 'base.html' %}
 
-{% block title %}Delete Drink{% endblock %}
+{% block title %}Edit Employee{% endblock %}
 
 {% block content %}
-<h2>Delete Drink</h2>
-<form method="post">
-    {% csrf_token %}
-    <p>Are you sure you want to delete "{{ drink.drink_name }}"?</p>
-    <button type="submit" class="btn btn-danger">Delete</button>
-    <a href="{% url 'drink_list' %}" class="btn btn-secondary">Cancel</a>
-</form>
+{% with user.userprofile.role as role %}
+    {% if role.name == 'Admin' %}
+    <h2>Delete Drink</h2>
+    <form method="post">
+        {% csrf_token %}
+        <p>Are you sure you want to delete "{{ drink.drink_name }}"?</p>
+        <button type="submit" class="btn btn-danger">Delete</button>
+        <a href="{% url 'drink_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+    {% else %}
+    <div class="container d-flex justify-content-center align-items-center">
+        <p class="alert alert-info col-md-3 text-center text-danger col-md-4">Dont have permission to delete employee</p>
+    </div>
+    {% endif %}
+
+{% endwith %}
+
 {% endblock %}

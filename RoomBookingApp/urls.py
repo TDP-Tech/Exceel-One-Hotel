@@ -7,6 +7,8 @@ urlpatterns = [
     path('rooms/create/', views.room_create, name='room_create'),
     path('rooms/update/<int:pk>/', views.room_update, name='room_update'),
     path('rooms/delete/<int:pk>/', views.room_delete, name='room_delete'),
+    
+    path('room/<int:room_id>/packages/', views.room_packages, name='room_packages'),
 
     # Booking URLs
     path('bookings/', views.booking_list, name='booking_list'),

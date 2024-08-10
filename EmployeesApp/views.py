@@ -17,7 +17,7 @@ def employee_create(request):
 
 @login_required
 def employee_list(request):
-    employees = Employee.objects.all()
+    employees = Employee.objects.all().order_by('-id')
     return render(request, 'employee_list.html', {'employees': employees})
 
 @login_required

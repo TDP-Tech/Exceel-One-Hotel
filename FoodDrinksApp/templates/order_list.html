@@ -1,9 +1,9 @@
-<!-- templates/myapp/order_list.html -->
 {% extends 'base.html' %}
 
 {% block title %}Order List{% endblock %}
 
 {% block content %}
+{% if orders %}
 <div class="container mt-4">
     <h2>Order List</h2>
     <table class="table table-bordered">
@@ -16,6 +16,11 @@
                 <th>Comments</th>
                 <th>Created At</th>
                 <th>Status</th>
+                {% with user.userprofile.role as role %}
+                    {% if role.name == 'Admin' %}
+                <th>Actions</th>
+                    {% endif %}
+                {% endwith %}
             </tr>
         </thead>
         <tbody>
@@ -40,13 +45,27 @@
                         <i class="fas fa-question-circle text-muted" title="Unknown"></i>
                     {% endif %}
                 </td>
+                {% with user.userprofile.role as role %}
+                    {% if role.name == 'Admin' %}
+                    <td>
+                        <a href="{% url 'order_update' order.id %}" title="Edit"><i class="fas fa-edit"></i></a>
+                        <a href="{% url 'order_delete' order.id %}" title="Delete"><i class="fas fa-trash" style="color: red;"></i></a>
+                    </td>
+                    
+                    {% endif %}
+                {% endwith %}
             </tr>
             {% empty %}
             <tr>
-                <td colspan="7">No orders found.</td>
+                <td colspan="8">No orders found.</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
 </div>
+{% else %}
+    <div class="container d-flex justify-content-center align-items-center">
+        <p class="alert alert-info col-md-3 text-center text-danger col-md-4">No orders yet</p>
+    </div>
+    {% endif %}
 {% endblock %}

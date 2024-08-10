@@ -1,35 +1,15 @@
-<!-- templates/myapp/order_process.html -->
 {% extends 'base.html' %}
 
-{% block title %}Order Process{% endblock %}
+{% block title %}Place Order{% endblock %}
 
 {% block content %}
+
 <div class="container mt-4">
-    <h2>Order Processing for item {{ item.pk }}</h2>
-    
-    <form method="post" action="{% url 'order_process' item_type=item_type pk=item.pk %}">
+    <h2>Place Order for {{ item }}</h2>
+    <form method="post">
         {% csrf_token %}
-        
-        <div class="form-group">
-            <label for="quantity">Quantity:</label>
-            <input type="number" id="quantity" name="quantity" class="form-control" min="1" required>
-        </div>
-        
-        <div class="form-group mt-3">
-            <label for="status">Status:</label>
-            <select id="status" name="status" class="form-control" required>
-                <option value="pending">Pending</option>
-            </select>
-        </div>
-        
-        <div class="form-group mt-3">
-            <label for="comments">Additional Comments:</label>
-            <textarea id="comments" name="comments" class="form-control" rows="4"></textarea>
-        </div>
-        
-        <div class="form-group mt-3">
-            <button type="submit" class="btn btn-primary">Submit Order</button>
-        </div>
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Order</button>
     </form>
 </div>
 {% endblock %}

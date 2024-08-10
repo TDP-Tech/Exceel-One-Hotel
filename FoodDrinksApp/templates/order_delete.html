@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete Order{% endblock %}
+
+{% block content %}
+
+{% endblock %}
+
+
+{% extends 'base.html' %}
+
+{% block title %}Place Order{% endblock %}
+
+{% block content %}
+
+{% with user.userprofile.role as role %}
+{% if role.name == 'Admin' %}
+<div class="container mt-4">
+    <h2>Delete Order</h2>
+    <p>Are you sure you want to delete the order for {{ order.get_item_name }}?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm Deletion</button>
+        <a href="{% url 'order_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endif %}
+{% endwith %}
+{% endblock %}

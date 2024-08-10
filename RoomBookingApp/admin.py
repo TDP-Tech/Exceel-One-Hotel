@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Room, Booking
+from .models import Room, Booking, Package
 
 class RoomAdmin(admin.ModelAdmin):
     list_display = ('room_number', 'room_type', 'price', 'user')
@@ -11,3 +11,8 @@ class BookingAdmin(admin.ModelAdmin):
 
 admin.site.register(Room, RoomAdmin)
 admin.site.register(Booking, BookingAdmin)
+
+
+@admin.register(Package)
+class PackageAdmin(admin.ModelAdmin):
+    list_display = ('package_name', 'description')

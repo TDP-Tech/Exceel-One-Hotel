@@ -1,13 +1,24 @@
+
 {% extends 'base.html' %}
 
-{% block title %}Delete Employee{% endblock %}
+{% block title %}Edit Employee{% endblock %}
 
 {% block content %}
-<h2>Delete Employee</h2>
-<p>Are you sure you want to delete "{{ employee.first_name }} {{ employee.last_name }}"?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit" class="btn btn-danger">Confirm Delete</button>
-    <a href="{% url 'employee_list' %}" class="btn btn-secondary">Cancel</a>
-</form>
+{% with user.userprofile.role as role %}
+    {% if role.name == 'Admin' %}
+    <h2>Delete Employee</h2>
+    <p>Are you sure you want to delete "{{ employee.first_name }} {{ employee.last_name }}"?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        <a href="{% url 'employee_list' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+    {% else %}
+    <div class="container d-flex justify-content-center align-items-center">
+        <p class="alert alert-info col-md-3 text-center text-danger col-md-4">Dont have permission to delete employee</p>
+    </div>
+    {% endif %}
+
+{% endwith %}
+
 {% endblock %}

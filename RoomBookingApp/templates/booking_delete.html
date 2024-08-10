@@ -1,8 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}Delete Booking{% endblock %}
+{% block title %}Add Booking{% endblock %}
 
 {% block content %}
+{% with user.userprofile.role as role %}
+{% if role.name == 'Admin' %}
 <h2>Delete Booking</h2>
 <p>Are you sure you want to delete booking for "{{ booking.customer_name }}" in room "{{ booking.room.room_number }}"?</p>
 <form method="post">
@@ -10,4 +12,6 @@
     <button type="submit" class="btn btn-danger">Confirm Delete</button>
     <a href="{% url 'booking_list' %}" class="btn btn-secondary">Cancel</a>
 </form>
+{% endif %}
+{% endwith %}
 {% endblock %}
