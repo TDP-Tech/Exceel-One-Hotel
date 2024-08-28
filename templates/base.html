@@ -12,14 +12,42 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
     <title>{% block title %}Exceel One Hotel{% endblock %}</title>
     <style>
+        /* Ensure the navbar and its contents fit within the viewport */
+        .navbar {
+            padding: 0;
+        }
+
+        .navbar-toggler {
+            margin-right: 15px; /* Adjust margin as needed */
+        }
+
+        /* Ensure the navbar-collapse takes up the full width */
+        .navbar-collapse {
+            width: 100%;
+        }
+
+        /* Optional: To ensure the collapse menu doesn't overflow */
+        @media (max-width: 991px) {
+            .navbar-nav {
+                margin-left: 0;
+                margin-right: 0;
+            }
+        }
+
         .navbar-brand img {
             max-height: 40px;
             border-radius: 20px;
-            margin-left: 15px;
+            margin-left: auto;
         }
+
         .navbar-nav {
             margin-right: auto;
-            margin-left: 25px;
+            margin-left: auto;
+        }
+
+        /* Optional: Ensuring box-sizing for better layout control */
+        * {
+            box-sizing: border-box;
         }
     </style>
 </head>

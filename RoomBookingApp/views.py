@@ -17,7 +17,9 @@ def room_create(request):
     if request.method == 'POST':
         form = RoomForm(request.POST)
         if form.is_valid():
-            form.save()
+            room = form.save(commit=False)  # Create an instance but don't save to database yet
+            room.user = request.user  # Set the user field
+            room.save()  # Now save the instance to the database
             return redirect('room_list')
     else:
         form = RoomForm()

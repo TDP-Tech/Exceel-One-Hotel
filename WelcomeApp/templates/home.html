@@ -12,12 +12,15 @@
         text-align: center;
         padding: 10px;
         border-radius: 5px;
+        width: 100%; /* Ensure the caption occupies full width */
     }
     .carousel-title {
         font-size: 50px;
+        white-space: wrap; /* Prevent breaking into multiple lines */
     }
     .carousel-description {
         font-size: 30px;
+        white-space: wrap; /* Prevent breaking into multiple lines */
     }
 
     .carousel-indicators button {
@@ -156,10 +159,29 @@
         .card-text {
             font-size: 0.9rem;
         }
+
+        .carousel-title {
+            font-size: 20px; /* Adjust the size for smaller screens */
+            white-space: wrap; /* Prevent breaking into multiple lines */
+        }
+
+        .carousel-description {
+            font-size: 16px; /* Adjust the size for smaller screens */
+            white-space: wrap; /* Prevent breaking into multiple lines */
+        }
+
+        .carousel-caption {
+            padding: 5px; /* Adjust padding for small screens */
+            width: 100%; /* Ensure the caption occupies full width */
+        }
     }
 
     .btn-order {
         margin-top: 10px;
+    }
+    .available{
+        font-size: 28px;
+        padding-top: 30px;
     }
 </style>
 
@@ -175,7 +197,7 @@
             {% for image in images %}
                 <div class="carousel-item {% if forloop.first %}active{% endif %}">
                     <img src="{{ image.image.url }}" class="d-block w-100" alt="{{ image.alt }}">
-                    <div class="carousel-caption col-md-12 d-none d-md-block">
+                    <div class="carousel-caption col-md-12">
                         <h5 class="carousel-title">{{ image.title }}</h5>
                         <p class="carousel-description">{{ image.description }}</p>
                     </div>
@@ -195,7 +217,7 @@
     
     <article>
         <header>
-            <h2>Available Foods</h2>
+            <p class="available">Available Foods</p>
         </header>
         <section class="row">
             {% for food in foods %}
@@ -223,7 +245,7 @@
     
     <article>
         <header>
-            <h2>Drink Samples</h2>
+            <p class="available">Available Drinks</p>
         </header>
         <section class="row">
             {% for drink in drinks %}

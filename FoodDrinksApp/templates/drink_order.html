@@ -3,18 +3,9 @@
 {% block title %}Edit Employee{% endblock %}
 
 {% block content %}
-{% with user.userprofile.role as role %}
-    {% if role.name == 'Admin' %}
     <form method="post" action="{% url 'order_process' item_type='drink' pk=drink.id %}">
         {% csrf_token %}
         <button type="submit" class="btn btn-primary mt-2">Click Button to Order</button>
     </form>
-    {% else %}
-    <div class="container d-flex justify-content-center align-items-center">
-        <p class="alert alert-info col-md-3 text-center text-danger col-md-4">Dont have permission to delete employee</p>
-    </div>
-    {% endif %}
-
-{% endwith %}
 
 {% endblock %}

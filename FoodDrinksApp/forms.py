@@ -38,11 +38,28 @@ class DrinkForm(forms.ModelForm):
         }
 
 
-
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
         fields = ['quantity', 'comments', 'status']
-        widgets = {
-            'comments': forms.Textarea(attrs={'rows': 4}),
+        labels = {
+            'quantity': 'Quantity',
+            'comments': 'Additional Comments',
+            'status': 'Order Status',
         }
+        widgets = {
+            'quantity': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter quantity of plates',
+                'min': 1,
+            }),
+            'comments': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Enter any special instructions or comments here',
+            }),
+            'status': forms.Select(attrs={
+                'class': 'form-control',
+            }),
+        }
+

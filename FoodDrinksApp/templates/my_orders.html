@@ -29,7 +29,21 @@
             <tr>
                 <td>{{ order.item_type|capfirst }}</td>
                 <td>{{ order.get_item_name }}</td>
-                <td>{{ order.quantity }}</td>
+                <td>
+                    {% if order.item_type == 'food' %}
+                        {% if order.quantity == 1 %}
+                            {{ order.quantity }} plate
+                        {% else %}
+                            {{ order.quantity }} plates
+                        {% endif %}
+                    {% elif order.item_type == 'drink' %}
+                        {% if order.quantity == 1 %}
+                            {{ order.quantity }} bottle
+                        {% else %}
+                            {{ order.quantity }} bottles
+                        {% endif %}
+                    {% endif %}
+                </td>
                 <td>{{ order.created_at|date:"M d, Y H:i" }}</td>
                 <td>
                     <span class="badge 
